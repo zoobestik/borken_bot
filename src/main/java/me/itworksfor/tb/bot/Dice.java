@@ -1,6 +1,5 @@
 package me.itworksfor.tb.bot;
 
-import me.itworksfor.tb.lib.MessageAction;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -8,39 +7,49 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static me.itworksfor.tb.Constants.DICE;
 import static me.itworksfor.tb.Constants.TIMER_BOT_NAME;
 import static me.itworksfor.tb.Constants.TIMER_BOT_TOKEN;
 
 public class Dice extends TelegramLongPollingBot {
-
+    private static Pattern trimPattern = Pattern.compile("\\s");
+    private static Pattern dicePattern = Pattern.compile("^d(?<num>\\d+)$");
     private static Random random = new Random();
 
     private static int getRandomInRange(int min, int max) {
         return random.ints(min, (max + 1)).limit(1).findFirst().getAsInt();
     }
 
-    public void onUpdateReceived(Update update) {
-        MessageAction action = MessageAction.parse(update);
+    protected String clean(String text) {
+        return trimPattern.matcher(text).replaceAll("");
+    }
 
-        if (action != null) {
-            switch (action.getCommand()) {
-                case DICE:
-                    onDiceMessage(action.getText(), action.getMessage(), update);
-                    break;
+    public void onUpdateReceived(Update update) {
+        if (update.hasMessage()) {
+            Message message = update.getMessage();
+
+            if (message.hasText()) {
+                Matcher matcher = dicePattern.matcher(clean(message.getText()));
+
+                if (matcher.find() && matcher.group("num") != null) {
+                    onDiceMessage(message, Integer.parseInt(matcher.group("num"), 10));
+                }
             }
         }
     }
 
-    private void onDiceMessage(String text, Message message, Update update) {
-        int min = 1;
-        int max = 20;
-        int val = getRandomInRange(min, max);
+    private void onDiceMessage(Message message, Integer max) {
+        onDiceMessage(message, 1, max);
+    }
+
+    private void onDiceMessage(Message message, Integer min, Integer max) {
+        Integer val = getRandomInRange(min, max);
 
         SendMessage sendMessageRequest = new SendMessage();
         sendMessageRequest.setChatId(message.getChatId().toString());
-        sendMessageRequest.setText(String.valueOf(val));
+        sendMessageRequest.setText(val.toString());
 
         try {
             sendMessage(sendMessageRequest);

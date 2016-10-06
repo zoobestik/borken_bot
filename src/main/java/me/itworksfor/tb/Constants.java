@@ -10,7 +10,7 @@ public class Constants {
     public static final String dbDriver = "com.mysql.jdbc.Driver";
     public static final String dbUser = "test";
     public static final String dbPassword = "test";
-    public static final String DICE = "dice";
+
     public static String TIMER_BOT_TOKEN = "";
     public static String TIMER_BOT_NAME = "";
 }
