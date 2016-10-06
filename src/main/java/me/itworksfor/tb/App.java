@@ -1,6 +1,5 @@
 package me.itworksfor.tb;
 
-import me.itworksfor.tb.bot.Dice;
 import org.telegram.telegrambots.TelegramBotsApi;
 
 public class App {
@@ -8,7 +7,7 @@ public class App {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
 
         try {
-            telegramBotsApi.registerBot(new Dice());
+            telegramBotsApi.registerBot(new GMBot());
         } catch (Exception e) {
             e.printStackTrace();
         }
