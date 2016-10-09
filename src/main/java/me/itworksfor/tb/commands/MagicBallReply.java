@@ -34,7 +34,6 @@ public class MagicBallReply extends ReplayCommand {
                     "Знаки говорят - нет",
                     "Перспективы не очень хорошие",
                     "Весьма сомнительно",
-                    "Нет",
             };
         }
 
