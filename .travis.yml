@@ -1,7 +1,24 @@
-udo: false
+sudo: false
 dist: trusty
 
 language: java
 
 jdk:
   - oraclejdk8
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+services:
+  - docker
+
+after_success:
+  - docker login --username="$DOCKER_USERNAME" --password="$DOCKER_PASSWORD"
+  - export REPO=zoobestik/gamebot
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - export COMMIT="travis-$TRAVIS_BUILD_NUMBER"
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker push $REPO
