@@ -18,7 +18,7 @@ public class Dice extends TelegramLongPollingBot {
     private static Pattern dicePattern = Pattern.compile("^d(?<num>\\d+)$");
     private static Random random = new Random();
 
-    private static int getRandomInRange(int min, int max) {
+    protected static int getRandomInRange(int min, int max) {
         return random.ints(min, (max + 1)).limit(1).findFirst().getAsInt();
     }
 
