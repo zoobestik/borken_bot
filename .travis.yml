@@ -1,0 +1,7 @@
+udo: false
+dist: trusty
+
+language: java
+
+jdk:
+  - oraclejdk8
