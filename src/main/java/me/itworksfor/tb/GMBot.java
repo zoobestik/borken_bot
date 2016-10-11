@@ -6,6 +6,7 @@ import me.itworksfor.tb.commands.ReplayCommand;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.bots.BotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -14,7 +15,9 @@ import java.util.Arrays;
 public class GMBot extends TelegramLongPollingCommandBot {
     protected ReplayCommand[] replays;
 
-    GMBot() {
+    GMBot(BotOptions options, boolean allowCommandsWithUsername) {
+        super(options, allowCommandsWithUsername);
+
         replays = new ReplayCommand[]{
                 new DiceReply(),
                 new MagicBallReply()
