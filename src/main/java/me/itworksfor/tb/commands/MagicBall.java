@@ -10,7 +10,7 @@ import static me.itworksfor.tb.lib.Utils.getRandomInRange;
 
 public class MagicBall extends Command {
     protected static String commandIdentifier = "8ball";
-    protected static String description = "description 8ball";
+    protected static String description = "спросить всевидящий шар";
 
     protected String[] answers;
 
@@ -56,9 +56,10 @@ public class MagicBall extends Command {
 
     @Override
     public boolean isValidAction(String action, Message message) {
-        if (action.charAt(0) == '/') {
-            action = action.substring(1);
-        }
         return action.startsWith("8") || action.startsWith("ball") || action.startsWith("8ball");
+    }
+
+    public String[] getShortNotations() {
+        return new String[]{"8", "ball"};
     }
 }

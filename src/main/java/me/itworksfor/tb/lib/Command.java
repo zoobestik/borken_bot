@@ -33,4 +33,10 @@ abstract public class Command extends BotCommand {
     protected abstract String replay(AbsSender sender, User user, Chat chat, String text);
 
     public abstract boolean isValidAction(String action, Message message);
+
+    public String[] getShortNotations() {
+        return null;
+    }
+
+    ;
 }
