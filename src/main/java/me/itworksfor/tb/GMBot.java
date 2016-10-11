@@ -1,57 +1,40 @@
 package me.itworksfor.tb;
 
-import me.itworksfor.tb.commands.DiceReply;
-import me.itworksfor.tb.commands.MagicBallReply;
-import me.itworksfor.tb.commands.ReplayCommand;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
+import me.itworksfor.tb.commands.Dice;
+import me.itworksfor.tb.commands.MagicBall;
+import me.itworksfor.tb.lib.Command;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.bots.BotOptions;
-import org.telegram.telegrambots.bots.TelegramLongPollingCommandBot;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class GMBot extends TelegramLongPollingCommandBot {
-    protected ReplayCommand[] replays;
+public class GMBot extends TelegramLongPollingBot {
+    protected List<Command> registry;
 
-    GMBot(BotOptions options, boolean allowCommandsWithUsername) {
-        super(options, allowCommandsWithUsername);
-
-        replays = new ReplayCommand[]{
-                new DiceReply(),
-                new MagicBallReply()
-        };
+    GMBot() {
+        registry = Arrays.asList(
+                new Dice(),
+                new MagicBall()
+        );
     }
 
     @Override
-    public void processNonCommandUpdate(Update update) {
-        Arrays.stream(replays).anyMatch(cmd -> replyCommandText(update, cmd));
-    }
-
-    protected boolean replyCommandText(Update update, ReplayCommand command) {
+    public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             Message message = update.getMessage();
+            if (message.isCommand()) {
+                String actionText = message.getText().trim();
 
-            if (message.hasText()) {
-                String text = command.replay(message, update);
-
-                if (text != null) {
-                    SendMessage sendMessageRequest = new SendMessage();
-                    sendMessageRequest.setChatId(message.getChatId().toString());
-                    sendMessageRequest.setText(text);
-
-                    try {
-                        sendMessage(sendMessageRequest);
-                        return true;
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
-                    }
-                }
+                registry.stream()
+                        .filter(command -> command.isValidAction(actionText, message))
+                        .findAny()
+                        .ifPresent(command -> {
+                            command.execute(this, message.getFrom(), message.getChat(), actionText.split("\\s+"));
+                        });
             }
         }
-
-        return false;
     }
 
     @Override
