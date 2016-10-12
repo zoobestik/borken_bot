@@ -46,11 +46,11 @@ public class GMBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return Constants.TIMER_BOT_NAME;
+        return Constants.getConstant("TELEGRAM_BOT_NAME");
     }
 
     @Override
     public String getBotToken() {
-        return Constants.TIMER_BOT_TOKEN;
+        return Constants.getConstant("TELEGRAM_BOT_TOKEN");
     }
 }
