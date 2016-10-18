@@ -1,13 +1,13 @@
 package me.itworksfor.tb.lib;
 
-import java.util.Random;
+import java.util.SplittableRandom;
 
 public class Utils {
-    private static Random random;
+    private static SplittableRandom random;
 
-    protected static Random getRandom() {
+    protected static SplittableRandom getRandom() {
         if (random == null) {
-            random = new Random();
+            random = new SplittableRandom();
         }
 
         return random;
@@ -22,6 +22,6 @@ public class Utils {
             max = val;
         }
 
-        return getRandom().ints(min, (max + 1)).limit(1).findFirst().getAsInt();
+        return getRandom().nextInt(min, max + 1);
     }
 }

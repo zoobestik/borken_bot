@@ -1,5 +1,6 @@
 package me.itworksfor.tb.lib;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.function.Function;
@@ -16,6 +17,14 @@ public class UtilsTest {
             return null;
         });
 
+    }
+
+    @Test @Ignore
+    public void checkGetBigRandomInRange() {
+        getRandomInRange(999999999, 2, 999999999, actual -> {
+            assertTrue(actual >= 1 && actual <= 999999999);
+            return null;
+        });
     }
 
     @Test
@@ -35,6 +44,10 @@ public class UtilsTest {
     }
 
     private void getRandomInRange(int min, int max, Function<Integer, Void> test) {
-        IntStream.rangeClosed(0, 100).forEach(i -> test.apply(Utils.getRandomInRange(min, max)));
+        getRandomInRange(1000, min, max, test);
+    }
+
+    private void getRandomInRange(int count, int min, int max, Function<Integer, Void> test) {
+        IntStream.rangeClosed(0, count).forEach(i -> test.apply(Utils.getRandomInRange(min, max)));
     }
 }
