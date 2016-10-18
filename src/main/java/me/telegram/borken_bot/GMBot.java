@@ -1,9 +1,9 @@
-package me.itworksfor.tb;
+package me.telegram.borken_bot;
 
-import me.itworksfor.tb.commands.Dice;
-import me.itworksfor.tb.commands.Help;
-import me.itworksfor.tb.commands.MagicBall;
-import me.itworksfor.tb.lib.Command;
+import me.telegram.borken_bot.commands.Dice;
+import me.telegram.borken_bot.commands.Help;
+import me.telegram.borken_bot.commands.MagicBall;
+import me.telegram.borken_bot.lib.Command;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;

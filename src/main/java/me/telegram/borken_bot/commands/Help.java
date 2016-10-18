@@ -1,7 +1,7 @@
-package me.itworksfor.tb.commands;
+package me.telegram.borken_bot.commands;
 
-import me.itworksfor.tb.GMBot;
-import me.itworksfor.tb.lib.Command;
+import me.telegram.borken_bot.GMBot;
+import me.telegram.borken_bot.lib.Command;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;

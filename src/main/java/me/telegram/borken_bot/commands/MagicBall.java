@@ -1,12 +1,11 @@
-package me.itworksfor.tb.commands;
+package me.telegram.borken_bot.commands;
 
-import me.itworksfor.tb.lib.Command;
+import me.telegram.borken_bot.lib.Command;
+import me.telegram.borken_bot.lib.Utils;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.AbsSender;
-
-import static me.itworksfor.tb.lib.Utils.getRandomInRange;
 
 public class MagicBall extends Command {
     protected static String commandIdentifier = "8ball";
@@ -51,7 +50,7 @@ public class MagicBall extends Command {
     }
 
     protected String replay(AbsSender sender, User user, Chat chat, String message) {
-        return getAnswers()[getRandomInRange(1, answers.length)];
+        return getAnswers()[Utils.getRandomInRange(1, answers.length)];
     }
 
     @Override

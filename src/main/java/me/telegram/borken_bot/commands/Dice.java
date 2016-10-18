@@ -1,6 +1,7 @@
-package me.itworksfor.tb.commands;
+package me.telegram.borken_bot.commands;
 
-import me.itworksfor.tb.lib.Command;
+import me.telegram.borken_bot.lib.Command;
+import me.telegram.borken_bot.lib.Utils;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
@@ -13,8 +14,6 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
-
-import static me.itworksfor.tb.lib.Utils.getRandomInRange;
 
 public class Dice extends Command {
     protected static String commandIdentifier = "dice";
@@ -94,7 +93,7 @@ public class Dice extends Command {
             int max = params.get("max") != null ? Integer.parseInt(params.get("max"), 10) : 20;
             int count = params.get("count") != null ? Integer.parseInt(params.get("count"), 10) : 1;
 
-            return String.valueOf(IntStream.generate(() -> getRandomInRange(1, max))
+            return String.valueOf(IntStream.generate(() -> Utils.getRandomInRange(1, max))
                     .limit(count)
                     .sum());
         }
@@ -106,6 +105,6 @@ public class Dice extends Command {
     }
 
     public String[] getShortNotations() {
-        return new String[]{"dice20", "d20", "2d3"};
+        return new String[]{"dice20", "d20", "2d4"};
     }
 }

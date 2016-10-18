@@ -1,4 +1,4 @@
-package me.itworksfor.tb.lib;
+package me.telegram.borken_bot.lib;
 
 import org.junit.Ignore;
 import org.junit.Test;

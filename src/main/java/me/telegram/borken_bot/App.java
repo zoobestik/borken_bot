@@ -1,4 +1,4 @@
-package me.itworksfor.tb;
+package me.telegram.borken_bot;
 
 import org.telegram.telegrambots.TelegramBotsApi;
 
