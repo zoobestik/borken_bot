@@ -1,18 +1,20 @@
 package me.telegram.borken_bot;
 
+import me.telegram.borken_bot.commands.AbsCommand;
 import me.telegram.borken_bot.commands.Dice;
 import me.telegram.borken_bot.commands.Help;
 import me.telegram.borken_bot.commands.MagicBall;
-import me.telegram.borken_bot.lib.Command;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class GMBot extends TelegramLongPollingBot {
-    protected final List<Command> registry;
+    protected final List<AbsCommand> registry;
+    protected final Pattern whiteSpaces = Pattern.compile("\\s+");
 
     GMBot() {
         registry = Arrays.asList(
@@ -22,7 +24,7 @@ public class GMBot extends TelegramLongPollingBot {
         );
     }
 
-    public List<Command> getRegistry() {
+    public List<AbsCommand> getRegistry() {
         return registry;
     }
 
@@ -37,9 +39,7 @@ public class GMBot extends TelegramLongPollingBot {
                 registry.stream()
                         .filter(command -> command.isValidAction(action, message))
                         .findAny()
-                        .ifPresent(command -> {
-                            command.execute(this, message.getFrom(), message.getChat(), action.split("\\s+"));
-                        });
+                        .ifPresent(command -> command.execute(this, message.getFrom(), message.getChat(), whiteSpaces.split(action)));
             }
         }
     }

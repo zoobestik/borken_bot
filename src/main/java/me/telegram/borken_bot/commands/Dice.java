@@ -1,6 +1,6 @@
 package me.telegram.borken_bot.commands;
 
-import me.telegram.borken_bot.lib.Command;
+import me.telegram.borken_bot.lib.Messenger;
 import me.telegram.borken_bot.lib.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.objects.Chat;
@@ -14,22 +14,12 @@ import java.util.stream.IntStream;
 
 import static me.telegram.borken_bot.lib.Utils.getNumericTokenLength;
 
-public class Dice extends Command {
+public class Dice extends AbsCommand {
     protected static String commandIdentifier = "dice";
     protected static String description = "бросить кубик с X-сторонами один или Y раз";
 
     public Dice() {
         super(commandIdentifier, description);
-    }
-
-    protected String replay(AbsSender sender, User user, Chat chat, String message) {
-        Map<String, String> params = tokenize(message);
-
-        if (params == null) {
-            params = tokenize(message);
-        }
-
-        return getMessage(params);
     }
 
     public Map<String, String> tokenize(String message) {
@@ -47,7 +37,7 @@ public class Dice extends Command {
         i = getNumericTokenLength(message);
 
         if (i != 0) {
-            groups.put("min", message.substring(0, i));
+            groups.put("count", message.substring(0, i));
             message = message.substring(i);
         }
         /* ====== / "min" (end) */
@@ -91,15 +81,35 @@ public class Dice extends Command {
         if (params != null) {
             int max = params.get("max") != null ? Integer.parseInt(params.get("max"), 10) : 20;
             int count = params.get("count") != null ? Integer.parseInt(params.get("count"), 10) : 1;
-
-            return String.valueOf(IntStream.generate(() -> Utils.getRandomInRange(1, max))
+            int random = IntStream.generate(() -> Utils.getRandomInRange(1, max))
                     .limit(count)
-                    .sum());
+                    .sum();
+
+            if (params.containsKey("modifier")) {
+                random += Integer.parseInt(params.get("modifier"));
+            }
+
+            return String.valueOf(random);
         }
         return null;
     }
 
     public String[] getShortNotations() {
         return new String[]{"dice20", "d20", "2d4+3"};
+    }
+
+    @Override
+    public void execute(AbsSender sender, User user, Chat chat, String[] args) {
+        String message = String.join("", args);
+
+        Messenger.replay(sender, chat, request -> {
+            Map<String, String> params = tokenize(message);
+
+            if (params.size() != 0) {
+                return getMessage(params);
+            }
+
+            return null;
+        });
     }
 }

@@ -1,5 +1,6 @@
 package me.telegram.borken_bot.commands;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
@@ -8,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DiceTest {
     @Test
-    public void testShortTokenizer() throws Exception {
+    public void testShortTokenizer() {
         Dice dice = new Dice();
 
         Map<String, String> groups0 = dice.tokenize("d20");
@@ -37,7 +38,7 @@ public class DiceTest {
     }
 
     @Test
-    public void testLongTokenizer() throws Exception {
+    public void testLongTokenizer() {
         Dice dice = new Dice();
 
         Map<String, String> groups0 = dice.tokenize("dice20");
@@ -51,5 +52,11 @@ public class DiceTest {
         assertEquals(null, groups1.get("min"));
         assertEquals("20", groups1.get("max"));
         assertEquals("1", groups1.get("modifier"));
+    }
+
+    @Test
+    @Ignore
+    public void testExecuteCommand() {
+
     }
 }

@@ -1,13 +1,13 @@
 package me.telegram.borken_bot.commands;
 
-import me.telegram.borken_bot.lib.Command;
+import me.telegram.borken_bot.lib.Messenger;
 import me.telegram.borken_bot.lib.Utils;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.AbsSender;
 
-public class MagicBall extends Command {
+public class MagicBall extends AbsCommand {
     protected static String commandIdentifier = "8ball";
     protected static String description = "спросить всевидящий шар";
 
@@ -49,8 +49,8 @@ public class MagicBall extends Command {
         return answers;
     }
 
-    protected String replay(AbsSender sender, User user, Chat chat, String message) {
-        return getAnswers()[Utils.getRandomInRange(1, answers.length)];
+    public void execute(AbsSender sender, User user, Chat chat, String[] args) {
+        Messenger.replay(sender, chat, request -> getAnswers()[Utils.getRandomInRange(1, answers.length)]);
     }
 
     @Override
