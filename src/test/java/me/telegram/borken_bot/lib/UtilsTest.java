@@ -19,7 +19,8 @@ public class UtilsTest {
 
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void checkGetBigRandomInRange() {
         getRandomInRange(999999999, 2, 999999999, actual -> {
             assertTrue(actual >= 1 && actual <= 999999999);
@@ -49,5 +50,14 @@ public class UtilsTest {
 
     private void getRandomInRange(int count, int min, int max, Function<Integer, Void> test) {
         IntStream.rangeClosed(0, count).forEach(i -> test.apply(Utils.getRandomInRange(min, max)));
+    }
+
+    @Test
+    public void checkGetNumericTokenLength() {
+        assertEquals(0, Utils.getNumericTokenLength(null));
+        assertEquals(0, Utils.getNumericTokenLength(""));
+        assertEquals(4, Utils.getNumericTokenLength("1234"));
+        assertEquals(0, Utils.getNumericTokenLength("o123"));
+        assertEquals(3, Utils.getNumericTokenLength("123oooo654"));
     }
 }
