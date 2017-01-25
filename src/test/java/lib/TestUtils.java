@@ -3,7 +3,6 @@ package lib;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.telegram.borken_bot.GMBot;
 import me.telegram.borken_bot.commands.AbsCommand;
-import org.json.JSONObject;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
@@ -19,9 +18,9 @@ import static org.mockito.Mockito.mock;
 
 public class TestUtils {
     public static void executeSimple(AbsSender sender, AbsCommand command, String[] args) throws IOException {
-        String chatJson = "{\n" +
-            "\"id\": \"123\",\n" +
-            "\"type\", \"private\"\n" +
+        String chatJson = "{" +
+                "\"id\": \"123\"," +
+                "\"type\", \"private\"" +
         "}";
 
         ObjectMapper mapper = new ObjectMapper();
