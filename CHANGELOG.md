@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.0-alpha.2 (July 23, 2026)
+
+Update internal libraries (security fixes)
+
 ## 2.0.0-alpha.1 (May 13, 2025)
 
 Rewrite in Rust.

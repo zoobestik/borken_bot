@@ -84,7 +84,7 @@ dependencies = [
 
 [[package]]
 name = "bot_cli"
-version = "2.0.0-alpha.1"
+version = "2.0.0-alpha.2"
 dependencies = [
  "bot_core",
  "dotenvy",
@@ -94,7 +94,7 @@ dependencies = [
 
 [[package]]
 name = "bot_core"
-version = "2.0.0-alpha.1"
+version = "2.0.0-alpha.2"
 dependencies = [
  "bot_lib",
  "serde",
@@ -103,7 +103,7 @@ dependencies = [
 
 [[package]]
 name = "bot_lib"
-version = "2.0.0-alpha.1"
+version = "2.0.0-alpha.2"
 dependencies = [
  "rand 0.10.2",
 ]
