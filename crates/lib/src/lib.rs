@@ -1,5 +1,5 @@
 use rand::distr::uniform::{SampleRange, SampleUniform};
-use rand::{Rng, rng};
+use rand::{RngExt, rng};
 
 pub mod dice;
 

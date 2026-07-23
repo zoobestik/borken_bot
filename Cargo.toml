@@ -17,4 +17,4 @@ homepage = "https://github.com/zoobestik/bot"
 publish = false
 
 [workspace.dependencies]
-teloxide = { version = "^0.17.0", features = ["macros", "sqlite-storage-nativetls"] }
+teloxide = { version = "^0.17", features = ["macros", "sqlite-storage-nativetls"] }
